@@ -14,6 +14,7 @@
     neovim
     zoxide
     docker
+    nodejs
     python3
     chezmoi
     lazygit
@@ -137,21 +138,6 @@
     };
   };
 
-  # Define a LaunchDaemon
-  launchd.user.agents = {
-    kanata = {
-      command = "/usr/local/bin/kanata";
-      serviceConfig = {
-        Label = "com.custom.kanata";
-        RunAtLoad = false;
-        KeepAlive = true;
-        UserName = "root"; # Run as root (needed for keyboard access)
-        StandardErrorPath = "/var/log/kanata.err.log";
-        StandardOutPath = "/var/log/kanata.out.log";
-
-      };
-    };
-  };
 
   # Necessary for using flakes on this system.
   nix.settings.experimental-features = "nix-command flakes";
