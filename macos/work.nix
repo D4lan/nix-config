@@ -20,6 +20,8 @@
   system.defaults.dock.persistent-apps = [
     "/System/Applications/Launchpad.app"
     "/Applications/Google Chrome.app"
+    # "~/Applications/Chrome Apps.localized/Gmail.app"
+    # "~/Applications/Chrome Apps.localized/Gcal.app"
     "/Applications/Ghostty.app"
     "/Applications/Slack.app"
     "/Applications/zoom.us.app"
@@ -28,6 +30,5 @@
 
   # The platform the configuration will be used on.
   nixpkgs.hostPlatform = "aarch64-darwin";
-  nix.enable = false;
 }
 

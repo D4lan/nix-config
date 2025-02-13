@@ -23,9 +23,9 @@
     fabric-ai
     lazydocker
     nixpkgs-fmt
+    # kanata
 
     # Broken on Mac
-    # kanata
     # ghostty
   ];
 
@@ -60,6 +60,23 @@
       upgrade = true;
     };
   };
+  # launchd.user.agents.kanata-serve = {
+  #   command = "/opt/homebrew/bin/kanata";
+  #   serviceConfig = {
+  #     Label = "com.custom.kanata";
+  #     KeepAlive = true;
+  #     RunAtLoad = true;
+  #     UserName = "root";
+  #     ProcessType = "Interactive";
+  #     ProgramArguments = [
+  #       "sudo"
+  #       "/opt/homebrew/bin/kanata"
+  #     ];
+  #     StandardOutPath = "/tmp/kanata.out.log";
+  #     StandardErrorPath = "/tmp/kanata.err.log";
+  #     Nice = 30;
+  #   };
+  # };
 
   # All MacOS settings: https://daiderd.com/nix-darwin/manual/index.html
   # You can get current MacO setting from running:
