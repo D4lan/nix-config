@@ -13,7 +13,6 @@
     htop
     neovim
     zoxide
-    docker
     nodejs
     python3
     chezmoi
@@ -42,6 +41,7 @@
     ];
     casks = [
       "alfred"
+      "docker"
       "ghostty"
       "google-drive"
       "karabiner-elements"
