@@ -1,5 +1,5 @@
 {
-  description = "Nix configuration for different machines";
+  description = "My Nix Config";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -10,11 +10,11 @@
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
   };
 
-  outputs = { self, nixpkgs, nix-darwin, nix-homebrew, ... }: {
+  outputs = { self, nixpkgs, nix-darwin, nix-homebrew, ... } @inputs: {
     darwinConfigurations = {
-      "home" = nix-darwin.lib.darwinSystem {
+      specialArgs = inputs;
+      "personal" = nix-darwin.lib.darwinSystem {
         modules = [
-          ./macos/home.nix
           nix-homebrew.darwinModules.nix-homebrew
           {
             nix-homebrew = {
@@ -22,14 +22,13 @@
               user = "d4lan";
             };
           }
+          ./hosts/macos/personal-x86.nix
         ];
-        # Set Git commit hash for darwin-version.
-        system.configurationRevision = self.rev or self.dirtyRev or null;
       };
 
       "work" = nix-darwin.lib.darwinSystem {
         modules = [
-          ./macos/work.nix
+          ./hosts/work/macos-aarch64.nix
           nix-homebrew.darwinModules.nix-homebrew
           {
             nix-homebrew = {
@@ -37,6 +36,7 @@
               user = "dylanw";
             };
           }
+          ./hosts/macos/work-aarch64.nix
         ];
         # Set Git commit hash for darwin-version.
         system.configurationRevision = self.rev or self.dirtyRev or null;
