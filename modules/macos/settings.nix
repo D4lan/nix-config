@@ -1,4 +1,4 @@
-{}: {
+{ ... }: {
   # All MacOS settings: https://daiderd.com/nix-darwin/manual/index.html
   # You can get current MacO setting from running:
   # defaults read > ~/projects/defaults/keyboard.json

@@ -1,5 +1,7 @@
 { pkgs, ... }: {
-  imports = [ ./base.nix ];
+  imports = [
+    ./default.nix
+  ];
 
   # Packages
   environment.systemPackages = with pkgs; [
@@ -15,7 +17,6 @@
     ];
   };
 
-
   # Custom macOS settings
   system.defaults.dock.persistent-apps = [
     "/System/Applications/Launchpad.app"
@@ -28,7 +29,4 @@
     "/System/Applications/System Settings.app"
   ];
 
-  # The platform the configuration will be used on.
-  nixpkgs.hostPlatform = "aarch64-darwin";
 }
-

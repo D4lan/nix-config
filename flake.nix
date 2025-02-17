@@ -13,7 +13,7 @@
   outputs = { self, nixpkgs, nix-darwin, nix-homebrew, ... } @inputs: {
     darwinConfigurations = {
       specialArgs = inputs;
-      "personal" = nix-darwin.lib.darwinSystem {
+      "personal-x86" = nix-darwin.lib.darwinSystem {
         modules = [
           nix-homebrew.darwinModules.nix-homebrew
           {
@@ -22,13 +22,24 @@
               user = "d4lan";
             };
           }
-          ./hosts/macos/personal-x86.nix
+          ./hosts/macos/x86/personal.nix
+        ];
+      };
+      "personal-aarch64" = nix-darwin.lib.darwinSystem {
+        modules = [
+          nix-homebrew.darwinModules.nix-homebrew
+          {
+            nix-homebrew = {
+              enable = true;
+              user = "d4lan";
+            };
+          }
+          ./hosts/macos/aarch64/personal.nix
         ];
       };
 
-      "work" = nix-darwin.lib.darwinSystem {
+      "work-aarch64" = nix-darwin.lib.darwinSystem {
         modules = [
-          ./hosts/work/macos-aarch64.nix
           nix-homebrew.darwinModules.nix-homebrew
           {
             nix-homebrew = {
@@ -36,10 +47,20 @@
               user = "dylanw";
             };
           }
-          ./hosts/macos/work-aarch64.nix
+          ./hosts/macos/aarch64/work.nix
         ];
-        # Set Git commit hash for darwin-version.
-        system.configurationRevision = self.rev or self.dirtyRev or null;
+      };
+      "work-x86" = nix-darwin.lib.darwinSystem {
+        modules = [
+          nix-homebrew.darwinModules.nix-homebrew
+          {
+            nix-homebrew = {
+              enable = true;
+              user = "dylanw";
+            };
+          }
+          ./hosts/macos/x86/work.nix
+        ];
       };
     };
   };
