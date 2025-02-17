@@ -6,9 +6,9 @@ let
 in
 {
   imports = [
-    ../../macos/pkgs.nix
-    ../../macos/settings.nix
-    ../../macos/shortcuts.nix
+    ./pkgs.nix
+    ./settings.nix
+    ./shortcuts.nix
   ];
 
   # Set Git commit hash for darwin-version.

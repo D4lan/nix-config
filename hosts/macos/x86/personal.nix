@@ -1,6 +1,6 @@
 { ... }: {
   imports = [
-    ../../../modules/macos/location/default.nix
+    ../../../modules/macos/default.nix
     ../../../modules/macos/location/personal.nix
   ];
 
