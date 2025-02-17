@@ -1,7 +1,4 @@
 { ... }: {
-  imports = [
-    ./default.nix
-  ];
 
   # Homebrew apps
   homebrew = {

@@ -1,7 +1,4 @@
 { pkgs, ... }: {
-  imports = [
-    ./default.nix
-  ];
 
   # Packages
   environment.systemPackages = with pkgs; [

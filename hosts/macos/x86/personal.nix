@@ -1,6 +1,7 @@
 { ... }: {
   imports = [
-    ../personal.nix
+    ../../../modules/macos/location/default.nix
+    ../../../modules/macos/location/personal.nix
   ];
 
   # The platform the configuration will be used on.
