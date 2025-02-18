@@ -2,17 +2,11 @@
 
 let
   # Try to get the passed-in self (the flake object)
-  self = config._module.args.self or { rev = null; dirtyRev = null; };
+  parent = config._module.args.self or { rev = null; dirtyRev = null; };
 in
 {
-  imports = [
-    ./pkgs.nix
-    ./settings.nix
-    ./shortcuts.nix
-  ];
-
   # Set Git commit hash for darwin-version.
-  system.configurationRevision = self.rev or self.dirtyRev or null;
+  system.configurationRevision = parent.rev or parent.dirtyRev or null;
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
