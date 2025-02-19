@@ -23,9 +23,9 @@
     fabric-ai
     lazydocker
     nixpkgs-fmt
-    # kanata
 
     # Broken on Mac
+    # kanata
     # ghostty
   ];
 
@@ -38,14 +38,14 @@
     brews = [
       "rust"
       "aider"
-      # "kanata"
+      "kanata"
     ];
     casks = [
       "alfred"
       "docker"
       "ghostty"
       "google-drive"
-      # "karabiner-elements"
+      "karabiner-elements"
     ];
 
     # Removes any homebrew apps installed outside of nix, and auto updates when building

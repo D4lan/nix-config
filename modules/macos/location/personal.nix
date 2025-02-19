@@ -1,4 +1,9 @@
-{ ... }: {
+{ pkgs, ... }: {
+
+  # Packages
+  environment.systemPackages = with pkgs; [
+    nodePackages.vercel
+  ];
 
   # Homebrew apps
   homebrew = {
@@ -12,7 +17,7 @@
     masApps = {
       "WireGuard" = 1451685025;
 
-      # To allow for touch id in browser
+      # To allow for touch id in browser "Bitwarden" = 1352778147;
       "Bitwarden" = 1352778147;
     };
   };
