@@ -2,67 +2,43 @@
   description = "My Nix Config";
 
   inputs = {
+    # Packages
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
+
+    # System
     nix-darwin = {
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
   };
 
-  outputs = { self, nixpkgs, nix-darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, ... } @inputs: {
-    darwinConfigurations = {
-      specialArgs = inputs;
-      "personal-x86" = nix-darwin.lib.darwinSystem {
-        modules = [
-          nix-homebrew.darwinModules.nix-homebrew
-          {
-            nix-homebrew = {
-              user = "d4lan";
-              enable = true;
-            };
-          }
-          ./hosts/macos/x86/personal.nix
-        ];
-      };
-      "personal-aarch64" = nix-darwin.lib.darwinSystem {
-        modules = [
-          nix-homebrew.darwinModules.nix-homebrew
-          {
-            nix-homebrew = {
-              enable = true;
-              user = "d4lan";
-            };
-          }
-          ./hosts/macos/aarch64/personal.nix
-        ];
+  outputs = { self, nixpkgs, nix-darwin, nix-homebrew, ... } @inputs:
+
+    let
+      colorschemes = {
+        cf = "catppuccin-frappe";
+        cm = "catppuccin-mocha";
       };
 
-      "work-aarch64" = nix-darwin.lib.darwinSystem {
-        modules = [
-          nix-homebrew.darwinModules.nix-homebrew
-          {
-            nix-homebrew = {
-              enable = true;
-              user = "dylanw";
-            };
-          }
-          ./hosts/macos/aarch64/work.nix
-        ];
+      personal-options = {
+        username = "roberm";
+        # More colorschemes at: https://github.com/tinted-theming/base16-schemes
+        colorscheme = colorschemes.cf;
+        opacity = 0.92; #1; # Terminal-related opacity. Range: 0-1 (e.g., 0.92)
+        fonts = [ "Hack" "FiraCode" "DroidSansMono" ];
       };
-      "work-x86" = nix-darwin.lib.darwinSystem {
-        modules = [
-          nix-homebrew.darwinModules.nix-homebrew
-          {
-            nix-homebrew = {
-              enable = true;
-              user = "dylanw";
-            };
-          }
-          ./hosts/macos/x86/work.nix
-        ];
-      };
+    in
+    {
+
+      ##################################################################
+      ###################### Physical Machines ########################
+      darwinConfigurations =
+        # Personal Darwin x86 Configurations
+        import ./hosts/macos/x86/personal.nix {
+          inherit (nixpkgs) lib;
+          inherit inputs nixpkgs nix-darwin personal-options;
+        };
     };
-  };
 }
 
