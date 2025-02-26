@@ -6,12 +6,14 @@
 
   environment.systemPackages = with pkgs; [
     mkalias
+    uv
     go
     zsh
     git
     lsd
     fzf
     htop
+    cargo
     neovim
     zoxide
     nodejs
@@ -22,11 +24,12 @@
     starship
     fabric-ai
     lazydocker
+    aider-chat
     nixpkgs-fmt
+    # pandoc_3_6
 
     # Broken on Mac
     # kanata
-    # ghostty
   ];
 
   fonts.packages = with pkgs;[
@@ -36,8 +39,6 @@
   homebrew = {
     enable = true;
     brews = [
-      "rust"
-      "aider"
       "kanata"
     ];
     casks = [

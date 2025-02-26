@@ -5,19 +5,18 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nix-darwin = {
       url = "github:LnL7/nix-darwin";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
     homebrew-bundle = {
-      url = "github:homebrew/homebrew-bundle";
+      url = "github:Homebrew/homebrew-bundle";
       flake = false;
     };
     homebrew-core = {
-      url = "github:homebrew/homebrew-core";
+      url = "github:Homebrew/homebrew-core";
       flake = false;
     };
     homebrew-cask = {
-      url = "github:homebrew/homebrew-cask";
+      url = "github:Homebrew/homebrew-cask";
       flake = false;
     };
   };
@@ -37,7 +36,8 @@
                 "homebrew/homebrew-cask" = homebrew-cask;
                 "homebrew/homebrew-bundle" = homebrew-bundle;
               };
-              mutableTaps = true;
+              # autoMigrate = true;
+              mutableTaps = false;
             };
           }
           ./hosts/macos/x86/personal.nix
@@ -48,8 +48,15 @@
           nix-homebrew.darwinModules.nix-homebrew
           {
             nix-homebrew = {
-              enable = true;
               user = "d4lan";
+              enable = true;
+              enableRosetta = true;
+              taps = {
+                "homebrew/homebrew-core" = homebrew-core;
+                "homebrew/homebrew-cask" = homebrew-cask;
+                "homebrew/homebrew-bundle" = homebrew-bundle;
+              };
+              mutableTaps = false;
             };
           }
           ./hosts/macos/aarch64/personal.nix
@@ -61,8 +68,16 @@
           nix-homebrew.darwinModules.nix-homebrew
           {
             nix-homebrew = {
-              enable = true;
               user = "dylanw";
+              enableRosetta = true;
+              enable = true;
+              taps = {
+                "homebrew/homebrew-core" = homebrew-core;
+                "homebrew/homebrew-cask" = homebrew-cask;
+                "homebrew/homebrew-bundle" = homebrew-bundle;
+              };
+              mutableTaps = false;
+              autoMigrate = true;
             };
           }
           ./hosts/macos/aarch64/work.nix
@@ -73,8 +88,14 @@
           nix-homebrew.darwinModules.nix-homebrew
           {
             nix-homebrew = {
-              enable = true;
               user = "dylanw";
+              enable = true;
+              taps = {
+                "homebrew/homebrew-core" = homebrew-core;
+                "homebrew/homebrew-cask" = homebrew-cask;
+                "homebrew/homebrew-bundle" = homebrew-bundle;
+              };
+              mutableTaps = false;
             };
           }
           ./hosts/macos/x86/work.nix
