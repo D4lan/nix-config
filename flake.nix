@@ -26,90 +26,81 @@
     mcp-servers-nix.url = "github:natsukium/mcp-servers-nix";
   };
 
-  outputs = { self, nixpkgs, nix-darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, mcp-servers-nix, ... } @inputs: {
-    darwinConfigurations = {
-      "personal-x86" = nix-darwin.lib.darwinSystem {
-        specialArgs = inputs;
-        modules = [
-          nix-homebrew.darwinModules.nix-homebrew
-          {
-            nix-homebrew = {
-              user = "d4lan";
-              enable = true;
-              taps = {
-                "homebrew/homebrew-core" = homebrew-core;
-                "homebrew/homebrew-cask" = homebrew-cask;
-                "homebrew/homebrew-bundle" = homebrew-bundle;
-              };
-              # autoMigrate = true;
-              mutableTaps = false;
+  outputs = { self, nixpkgs, nix-darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, mcp-servers-nix, ... } @inputs: 
+    let
+      # Helper function to create homebrew module with user-specific settings
+      mkHomebrewModule = { username, enableRosetta ? false, autoMigrate ? false, ... }: {
+        nix-homebrew = {
+          user = username;
+          enable = true;
+          enableRosetta = enableRosetta;
+          taps = {
+            "homebrew/homebrew-core" = homebrew-core;
+            "homebrew/homebrew-cask" = homebrew-cask;
+            "homebrew/homebrew-bundle" = homebrew-bundle;
+          };
+          mutableTaps = false;
+          autoMigrate = autoMigrate;
+        };
+      };
+      
+      # MCP module for Minecraft proxy server
+      mcpModule = { pkgs, ... }: {
+        imports = [
+          (mcp-servers-nix.lib.mkConfig pkgs {
+            programs = {
+              filesystem.enable = true;
+              fetch.enable = true;
             };
-          }
-          ./hosts/macos/x86/personal.nix
+          })
         ];
       };
-      "personal-aarch64" = nix-darwin.lib.darwinSystem {
-        specialArgs = inputs;
-        modules = [
-          nix-homebrew.darwinModules.nix-homebrew
-          {
-            nix-homebrew = {
-              user = "d4lan";
-              enable = true;
-              enableRosetta = true;
-              taps = {
-                "homebrew/homebrew-core" = homebrew-core;
-                "homebrew/homebrew-cask" = homebrew-cask;
-                "homebrew/homebrew-bundle" = homebrew-bundle;
-              };
-              mutableTaps = false;
-            };
-          }
-          ./hosts/macos/aarch64/personal.nix
-        ];
-      };
+    in {
+      darwinConfigurations = {
+        "personal-x86" = nix-darwin.lib.darwinSystem {
+          specialArgs = inputs;
+          modules = [
+            nix-homebrew.darwinModules.nix-homebrew
+            (mkHomebrewModule { username = "d4lan"; })
+            mcpModule
+            ./hosts/macos/x86/personal.nix
+          ];
+        };
+        
+        "personal-aarch64" = nix-darwin.lib.darwinSystem {
+          specialArgs = inputs;
+          modules = [
+            nix-homebrew.darwinModules.nix-homebrew
+            (mkHomebrewModule { 
+              username = "d4lan";
+              enableRosetta = true; 
+            })
+            mcpModule
+            ./hosts/macos/aarch64/personal.nix
+          ];
+        };
 
-      "work-aarch64" = nix-darwin.lib.darwinSystem {
-        specialArgs = inputs;
-        modules = [
-          nix-homebrew.darwinModules.nix-homebrew
-          {
-            nix-homebrew = {
-              user = "dylanw";
+        "work-aarch64" = nix-darwin.lib.darwinSystem {
+          specialArgs = inputs;
+          modules = [
+            nix-homebrew.darwinModules.nix-homebrew
+            (mkHomebrewModule { 
+              username = "dylanw";
               enableRosetta = true;
-              enable = true;
-              taps = {
-                "homebrew/homebrew-core" = homebrew-core;
-                "homebrew/homebrew-cask" = homebrew-cask;
-                "homebrew/homebrew-bundle" = homebrew-bundle;
-              };
-              mutableTaps = false;
               autoMigrate = true;
-            };
-          }
-          ./hosts/macos/aarch64/work.nix
-        ];
-      };
-      "work-x86" = nix-darwin.lib.darwinSystem {
-        specialArgs = inputs;
-        modules = [
-          nix-homebrew.darwinModules.nix-homebrew
-          {
-            nix-homebrew = {
-              user = "dylanw";
-              enable = true;
-              taps = {
-                "homebrew/homebrew-core" = homebrew-core;
-                "homebrew/homebrew-cask" = homebrew-cask;
-                "homebrew/homebrew-bundle" = homebrew-bundle;
-              };
-              mutableTaps = false;
-            };
-          }
-          ./hosts/macos/x86/work.nix
-        ];
+            })
+            ./hosts/macos/aarch64/work.nix
+          ];
+        };
+        
+        "work-x86" = nix-darwin.lib.darwinSystem {
+          specialArgs = inputs;
+          modules = [
+            nix-homebrew.darwinModules.nix-homebrew
+            (mkHomebrewModule { username = "dylanw"; })
+            ./hosts/macos/x86/work.nix
+          ];
+        };
       };
     };
-  };
 }
-

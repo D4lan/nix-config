@@ -1,6 +1,6 @@
 { ... }: {
   imports = [
-    ../../../modules/macos/default.nix
+    ../../../modules/macos/core.nix
     ../../../modules/macos/pkgs.nix
     ../../../modules/macos/settings.nix
     ../../../modules/macos/shortcuts.nix
