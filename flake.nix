@@ -6,6 +6,8 @@
     nix-darwin = {
       url = "github:LnL7/nix-darwin";
     };
+
+    # homebrew
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
     homebrew-bundle = {
       url = "github:Homebrew/homebrew-bundle";
@@ -19,12 +21,15 @@
       url = "github:Homebrew/homebrew-cask";
       flake = false;
     };
+
+    # mcp
+    mcp-servers-nix.url = "github:natsukium/mcp-servers-nix";
   };
 
-  outputs = { self, nixpkgs, nix-darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, ... } @inputs: {
+  outputs = { self, nixpkgs, nix-darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, mcp-servers-nix, ... } @inputs: {
     darwinConfigurations = {
-      specialArgs = inputs;
       "personal-x86" = nix-darwin.lib.darwinSystem {
+        specialArgs = inputs;
         modules = [
           nix-homebrew.darwinModules.nix-homebrew
           {
@@ -44,6 +49,7 @@
         ];
       };
       "personal-aarch64" = nix-darwin.lib.darwinSystem {
+        specialArgs = inputs;
         modules = [
           nix-homebrew.darwinModules.nix-homebrew
           {
@@ -64,6 +70,7 @@
       };
 
       "work-aarch64" = nix-darwin.lib.darwinSystem {
+        specialArgs = inputs;
         modules = [
           nix-homebrew.darwinModules.nix-homebrew
           {
@@ -84,6 +91,7 @@
         ];
       };
       "work-x86" = nix-darwin.lib.darwinSystem {
+        specialArgs = inputs;
         modules = [
           nix-homebrew.darwinModules.nix-homebrew
           {

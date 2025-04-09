@@ -42,6 +42,7 @@
       "kanata"
     ];
     casks = [
+      "zoom"
       "alfred"
       "docker"
       "ghostty"

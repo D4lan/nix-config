@@ -9,6 +9,7 @@
   homebrew = {
     casks = [
       "google-chrome"
+      "adguard"
     ];
     brews = [
       "mas"

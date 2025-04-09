@@ -8,9 +8,14 @@
     dock.autohide = true;
     finder.FXPreferredViewStyle = "clmv";
     loginwindow.GuestEnabled = false;
+    ".GlobalPreferences" = {
+      "com.apple.mouse.scaling" = 2;
+      # "com.apple.sound.beep.sound" = ;
+    };
     NSGlobalDomain = {
       AppleInterfaceStyle = "Dark";
       KeyRepeat = 2;
+      "com.apple.swipescrolldirection" = false;
     };
   };
 }
