@@ -4,7 +4,6 @@
     ../../../modules/macos/pkgs.nix
     ../../../modules/macos/settings.nix
     ../../../modules/macos/shortcuts.nix
-    ../../../modules/macos/mcp-servers.nix
 
     ../../../modules/macos/location/personal.nix
   ];

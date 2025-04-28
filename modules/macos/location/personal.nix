@@ -8,8 +8,9 @@
   # Homebrew apps
   homebrew = {
     casks = [
-      "google-chrome"
+      "claude"
       "adguard"
+      "google-chrome"
     ];
     brews = [
       "mas"
@@ -19,7 +20,7 @@
       "WireGuard" = 1451685025;
 
       # To allow for touch id in browser "Bitwarden" = 1352778147;
-      "Bitwarden" = 1352778147;
+      # "Bitwarden" = 1352778147;
     };
   };
 

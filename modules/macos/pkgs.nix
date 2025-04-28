@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ mcp-hub, pkgs, ... }: {
   nixpkgs.config.allowUnfree = true;
 
   # List packages installed in system profile. To search by name, run:
@@ -17,6 +17,7 @@
     neovim
     zoxide
     nodejs
+    awscli2
     python3
     chezmoi
     lazygit
@@ -26,6 +27,7 @@
     lazydocker
     aider-chat
     nixpkgs-fmt
+    # mcp-hub.packages."${system}".default
     # pandoc_3_6
 
     # Broken on Mac

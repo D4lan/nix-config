@@ -23,11 +23,13 @@
     };
 
     # mcp
+    mcp-hub.url = "github:ravitemer/mcp-hub";
     mcp-servers-nix.url = "github:natsukium/mcp-servers-nix";
   };
 
   outputs = { self, nixpkgs, nix-darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, mcp-servers-nix, ... } @inputs: 
     let
+
       # Helper function to create homebrew module with user-specific settings
       mkHomebrewModule = { username, enableRosetta ? false, autoMigrate ? false, ... }: {
         nix-homebrew = {
@@ -44,7 +46,7 @@
         };
       };
       
-      # MCP module for Minecraft proxy server
+      # MCP module for AI Model Context Protocol Servers
       mcpModule = { pkgs, ... }: {
         imports = [
           (mcp-servers-nix.lib.mkConfig pkgs {
@@ -62,7 +64,7 @@
           modules = [
             nix-homebrew.darwinModules.nix-homebrew
             (mkHomebrewModule { username = "d4lan"; })
-            mcpModule
+            # mcpModule
             ./hosts/macos/x86/personal.nix
           ];
         };
@@ -75,7 +77,7 @@
               username = "d4lan";
               enableRosetta = true; 
             })
-            mcpModule
+            # mcpModule
             ./hosts/macos/aarch64/personal.nix
           ];
         };
